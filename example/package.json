@@ -1,0 +1,5 @@
+{
+  "name": "cypress-lighthouse-plugin-example",
+  "private": true,
+  "type": "module"
+}

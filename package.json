@@ -1,0 +1,56 @@
+{
+  "author": "Trevor Burnham (https://trevorburnham.com)",
+  "name": "cypress-lighthouse-plugin",
+  "version": "0.1.0",
+  "description": "Run Lighthouse audits from your Cypress tests.",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TrevorBurnham/cypress-lighthouse-plugin.git"
+  },
+  "homepage": "https://github.com/TrevorBurnham/cypress-lighthouse-plugin",
+  "bugs": {
+    "url": "https://github.com/TrevorBurnham/cypress-lighthouse-plugin/issues"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./commands": {
+      "types": "./dist/commands.d.ts",
+      "import": "./dist/commands.js",
+      "require": "./dist/commands.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "format": "eslint . --fix && prettier . --log-level warn --write",
+    "example": "npm run build && cd example && cypress run",
+    "release": "np"
+  },
+  "keywords": [
+    "cypress",
+    "lighthouse"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "^9.27.0",
+    "@types/node": "^22.15.24",
+    "eslint": "^9.27.0",
+    "np": "^10.2.0",
+    "prettier": "^3.5.3",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.33.0"
+  },
+  "peerDependencies": {
+    "cypress": ">=12.0.0",
+    "lighthouse": ">= 12.0.0"
+  }
+}
