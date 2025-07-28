@@ -31,11 +31,11 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "npm run format && tsup",
     "typecheck": "tsc --noEmit",
     "format": "eslint . --fix && prettier . --log-level warn --write",
     "example": "npm run build && cd example && cypress run",
-    "release": "np"
+    "release": "npm run build && np"
   },
   "keywords": [
     "cypress",

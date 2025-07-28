@@ -1,4 +1,9 @@
-import { ComparisonResult, Metric, MetricWithNumericValue, MetricWithScore } from "../types.js";
+import {
+  ComparisonResult,
+  Metric,
+  MetricWithNumericValue,
+  MetricWithScore,
+} from "../types.js";
 
 /**
  * Compute the general categories of lighthouse
