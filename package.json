@@ -35,6 +35,7 @@
     "typecheck": "tsc --noEmit",
     "format": "eslint . --fix && prettier . --log-level warn --write",
     "example": "npm run build && cd example && cypress run",
+    "test": "echo 'No tests yet'",
     "release": "npm run build && np"
   },
   "keywords": [
