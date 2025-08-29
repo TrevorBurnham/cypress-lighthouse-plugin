@@ -3,8 +3,13 @@
  */
 
 // Re-export types from lighthouse module
-import type { Flags, RunnerResult } from "lighthouse";
-export type { Flags, RunnerResult };
+import type {
+  Flags,
+  RunnerResult,
+  Config,
+  SharedFlagsSettings,
+} from "lighthouse";
+export type { Flags, RunnerResult, Config, SharedFlagsSettings };
 
 // Browser launch options
 export interface LaunchOptions {
@@ -24,8 +29,8 @@ export interface LighthouseThresholds {
 // Configuration for Lighthouse
 export interface LighthouseConfig {
   thresholds?: LighthouseThresholds;
-  options?: Record<string, unknown>;
-  config?: Record<string, unknown>;
+  options?: SharedFlagsSettings;
+  config?: Config;
 }
 
 // Result of a Lighthouse comparison
