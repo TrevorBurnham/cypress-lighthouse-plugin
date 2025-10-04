@@ -49,8 +49,8 @@ const lighthouseCommandHandler = (
 
     if (!thresholds && !configThresholds) {
       cy.log(
-        "cypress-audit",
-        "It looks like you have not set thresholds yet. The test will be based on the 100 score for every metrics. Refer to https://github.com/mfrachet/cypress-audit to have more information and set thresholds by yourself :).",
+        "cypress-lighthouse-plugin",
+        "It looks like you have not set thresholds yet. The test will be based on the 100 score for every metric. Refer to https://github.com/TrevorBurnham/cypress-lighthouse-plugin to have more information and set thresholds by yourself :).",
       );
     }
 

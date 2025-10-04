@@ -19,7 +19,7 @@ const prepareAudit = (launchOptions: LaunchOptions): void => {
     }
   } else {
     console.error(
-      `[cypress-audit]: Woops, something went wrong when trying to get the browser port. Are sure you run your tests in a chromium based browser?
+      `[cypress-lighthouse-plugin]: Woops, something went wrong when trying to get the browser port. Are you sure you're running your tests in a Chromium-based browser?
 
 			npx cypress run --browser=chrome
 		`,

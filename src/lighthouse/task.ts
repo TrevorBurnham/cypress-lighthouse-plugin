@@ -52,6 +52,6 @@ export const lighthouse =
     }
 
     throw new Error(
-      "The Cypress port could not be resolved. Have you setup the project following this guide: https://github.com/mfrachet/cypress-audit/blob/master/packages/lighthouse/README.md#preparing-the-server-configuration ?",
+      "The Cypress port could not be resolved. Have you set up the project following the setup guide in the README? https://github.com/TrevorBurnham/cypress-lighthouse-plugin#setup",
     );
   };
