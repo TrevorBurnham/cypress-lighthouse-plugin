@@ -31,6 +31,7 @@ export interface LighthouseConfig {
   thresholds?: LighthouseThresholds;
   options?: SharedFlagsSettings;
   config?: Config;
+  identifier?: string;
 }
 
 // Result of a Lighthouse comparison

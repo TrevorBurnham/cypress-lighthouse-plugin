@@ -8,12 +8,13 @@ import { LighthouseConfig } from "../types.js";
 import { getDebugPort } from "./port-storage.js";
 
 export const lighthouse =
-  (callback: (results: RunnerResult) => void) =>
+  (callback: (results: RunnerResult, identifier?: string) => void) =>
   async ({
     url,
     thresholds,
     opts = {},
     config,
+    identifier,
   }: LighthouseConfig & { url: string; opts: Flags }) => {
     // Get the debugging port from our module-level storage
     const port = getDebugPort();
@@ -36,7 +37,7 @@ export const lighthouse =
       return lighthouse(url, opts, config).then((results) => {
         if (!results) return;
         if (callback) {
-          callback(results);
+          callback(results, identifier);
         }
 
         const computedAudits = computeAudits(results.lhr.audits);

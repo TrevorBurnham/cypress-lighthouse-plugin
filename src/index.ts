@@ -17,11 +17,13 @@ declare global {
        * @param thresholds - Performance thresholds to test against
        * @param opts - Lighthouse options
        * @param config - Lighthouse configuration
+       * @param identifier - Optional identifier to distinguish reports
        */
       lighthouse(
         thresholds?: Record<string, number>,
         opts?: Record<string, unknown>,
         config?: Record<string, unknown>,
+        identifier?: string,
       ): Chainable<void>;
     }
   }

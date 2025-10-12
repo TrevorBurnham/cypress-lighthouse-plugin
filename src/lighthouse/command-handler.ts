@@ -22,6 +22,7 @@ const lighthouseCommandHandler = (
   thresholds?: LighthouseThresholds,
   opts?: Flags,
   config?: LighthouseConfig,
+  identifier?: string,
 ): Cypress.Chainable => {
   if (!VALID_BROWSERS[Cypress.browser.displayName]) {
     return cy.log(
@@ -61,6 +62,7 @@ const lighthouseCommandHandler = (
         thresholds: thresholds || configThresholds || defaultThresholds,
         opts: opts || globalOptions,
         config: config || globalConfig,
+        identifier: identifier,
       })
       .then((lighthouseResult) => {
         if (!lighthouseResult) {

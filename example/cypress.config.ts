@@ -12,9 +12,12 @@ export default defineConfig({
       });
 
       on("task", {
-        lighthouse: lighthouse(async (lighthouseResult) => {
-          await writeFile("lighthouse-report.json", lighthouseResult.report);
-          console.log("Saved Lighthouse report as lighthouse-report.json.");
+        lighthouse: lighthouse(async (lighthouseResult, identifier) => {
+          const filename = identifier
+            ? `lighthouse-report-${identifier}.json`
+            : "lighthouse-report.json";
+          await writeFile(filename, lighthouseResult.report);
+          console.log(`Saved Lighthouse report as ${filename}.`);
         }),
       });
     },
