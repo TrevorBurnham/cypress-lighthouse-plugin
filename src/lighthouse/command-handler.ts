@@ -31,10 +31,11 @@ const lighthouseCommandHandler = (
     );
   }
 
-  return cy.url().then((url) => {
-    // Handling the default value in cypress.json for "thresholds", "config" and "options"
-    // Use type assertion to handle custom config property
-    cy.env(["lighthouse"]).then(({ lighthouse }) => {
+  return cy.env(["lighthouse"], { log: false }).then(({ lighthouse }) => {
+    return cy.url().then((url) => {
+      // Handling the default value in cypress.json for "thresholds", "config" and "options"
+      // Use type assertion to handle custom config property
+
       const lighthouseConfig = lighthouse as LighthouseConfig | undefined;
 
       const configThresholds = lighthouseConfig
