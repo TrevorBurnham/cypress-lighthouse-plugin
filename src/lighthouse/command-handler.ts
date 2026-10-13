@@ -31,67 +31,72 @@ const lighthouseCommandHandler = (
     );
   }
 
-  return cy.url().then((url) => {
-    // Handling the default value in cypress.json for "thresholds", "config" and "options"
-    // Use type assertion to handle custom config property
-    const lighthouseConfig = Cypress.env("lighthouse") as
-      | LighthouseConfig
-      | undefined;
+  return cy.env(["lighthouse"], { log: false }).then(({ lighthouse }) => {
+    return cy.url().then((url) => {
+      // Handling the default value in cypress.json for "thresholds", "config" and "options"
+      // Use type assertion to handle custom config property
 
-    const configThresholds = lighthouseConfig
-      ? lighthouseConfig.thresholds
-      : undefined;
+      const lighthouseConfig = lighthouse as LighthouseConfig | undefined;
 
-    const globalOptions = lighthouseConfig
-      ? lighthouseConfig.options
-      : undefined;
+      const configThresholds = lighthouseConfig
+        ? lighthouseConfig.thresholds
+        : undefined;
 
-    const globalConfig = lighthouseConfig ? lighthouseConfig.config : undefined;
+      const globalOptions = lighthouseConfig
+        ? lighthouseConfig.options
+        : undefined;
 
-    if (!thresholds && !configThresholds) {
-      cy.log(
-        "cypress-lighthouse-plugin",
-        "It looks like you have not set thresholds yet. The test will be based on the 100 score for every metric. Refer to https://github.com/TrevorBurnham/cypress-lighthouse-plugin to have more information and set thresholds by yourself :).",
-      );
-    }
+      const globalConfig = lighthouseConfig
+        ? lighthouseConfig.config
+        : undefined;
 
-    cy.log("-------- cy.lighthouse --------");
-    return cy
-      .task<LighthouseResult>("lighthouse", {
-        url,
-        thresholds: thresholds || configThresholds || defaultThresholds,
-        opts: opts || globalOptions,
-        config: config || globalConfig,
-        identifier: identifier,
-      })
-      .then((lighthouseResult) => {
-        if (!lighthouseResult) {
-          throw new Error(
-            "For an unexpected reason, lighthouse did not manage to run correctly. It might be related to lighthouse itself.",
-          );
-        }
+      if (!thresholds && !configThresholds) {
+        cy.log(
+          "cypress-lighthouse-plugin",
+          "It looks like you have not set thresholds yet. The test will be based on the 100 score for every metric. Refer to https://github.com/TrevorBurnham/cypress-lighthouse-plugin to have more information and set thresholds by yourself :).",
+        );
+      }
 
-        const { errors, results } = lighthouseResult;
-        results.forEach((res) => {
-          cy.log(res);
+      cy.log("-------- cy.lighthouse --------");
+      return cy
+        .task<LighthouseResult>("lighthouse", {
+          url,
+          thresholds: thresholds || configThresholds || defaultThresholds,
+          opts: opts || globalOptions,
+          config: config || globalConfig,
+          identifier: identifier,
+        })
+        .then((lighthouseResult) => {
+          if (!lighthouseResult) {
+            throw new Error(
+              "For an unexpected reason, lighthouse did not manage to run correctly. It might be related to lighthouse itself.",
+            );
+          }
+
+          const { errors, results } = lighthouseResult;
+          results.forEach((res) => {
+            cy.log(res);
+          });
+          cy.log("-----------------------------");
+
+          return cy.wrap(errors);
+        })
+        .then((errors) => {
+          if (errors && errors.length > 0) {
+            // Convert JQuery<string[]> to string[] if needed
+            const errorArray = Array.isArray(errors)
+              ? errors
+              : errors.toArray();
+            const formatedErrors = `\n\n${errorArray.join("\n")}`;
+
+            const label =
+              errorArray.length === 1
+                ? `cy.lighthouse - A threshold has been crossed.${formatedErrors}`
+                : `cy.lighthouse - Some thresholds have been crossed.${formatedErrors}`;
+            throw new Error(label);
+          }
         });
-        cy.log("-----------------------------");
-
-        return cy.wrap(errors);
-      })
-      .then((errors) => {
-        if (errors && errors.length > 0) {
-          // Convert JQuery<string[]> to string[] if needed
-          const errorArray = Array.isArray(errors) ? errors : errors.toArray();
-          const formatedErrors = `\n\n${errorArray.join("\n")}`;
-
-          const label =
-            errorArray.length === 1
-              ? `cy.lighthouse - A threshold has been crossed.${formatedErrors}`
-              : `cy.lighthouse - Some thresholds have been crossed.${formatedErrors}`;
-          throw new Error(label);
-        }
-      });
+    });
   });
 };
 
